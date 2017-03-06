@@ -69,3 +69,48 @@ test set
 - Test: Assess generalization error.
 - Typical splits: 80/10/10 or 50/25/25
 
+# Adding k fold cross validation
+- Split your data sets in K groups. K typically < 10
+```
+acumulateError
+for i  < k
+  training = All blocks  minus k
+  test = block K
+  model = fit(Training)
+  acumulateError = model.Error(Test)
+ accumulateError / K
+```
+
+# Ridge and lasso 
+Often, overfitting associated with very large estimated parameters ŵ
+
+
+## Number of observations  vs overfitting 
+- Few observations (N small) rapidly overfit as model complexity increases
+- Many observations (N very large)  harder to overfit
+
+## Number of inputs vs overfitting
+- More features -> more overfitting unless data includes examples of all possible combos (which is very hard)
+
+## What lasso and ridge do
+Balance how well the function fits the data and the magnitude of the coeficiicents.
+
+Total cost = measure of fit + measure of magnitudeof coefficients
+Ridge = RSS + lambda * Sum(w ^ 2)  where w are  the coefficients 
+Lasso = RSS + lambda * Sum(|w|)  where w are  the coefficients
+
+- if lambda = 0 then same as regular regression
+- if lambda = infinite solution is W0. Not useful
+- Large lambda -> high bias, low variance
+- small  lambda -> low bias, high variance
+- in essence, lambda controls model complexity
+
+## Lasso vs ridge
+- Ridge reduces the magnitude of all coefficients. They do not tend to become 0 until the lambda = infinite.
+- Lasso starts bringing them down to 0, one by one, until all are  0
+- Lasso effectively performs feature selection. The features with coeffecient 0 have been filtered out of the solution.
+
+# KNN
+
+1. Find K closes x in the dataset (using some distance metric such as euclidean)
+2. Predict by grabbing the y of those K closest and taking an average,
